@@ -1,0 +1,61 @@
+name: Performance Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  performance_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+
+      - name: Install NeoLoad
+        run: |
+          wget -O neoload.tar.gz https://neoload-files.neotys.com/jenkins/neoload/v7.10/Neoload_7.10_Linux_x64.tar.gz
+          tar xvf neoload.tar.gz
+          export PATH=$PATH:$PWD/NeoLoad/bin/
+
+      - name: Login to WSDL
+        run: |
+          neoload-cli --wsdl-login "http://demowebshop.tricentis.com/Plugins/Misc.WebServicesCustomer/Remote/NopService.svc?wsdl" --wsdl-username "mc.elfferich@student.avans.nl" --wsdl-password "Welcome01"
+
+      - name: Login to NeoLoad Web
+        run: |
+          neoload-cli login --url ${{ github.event.inputs.api_url }} ${{ github.event.inputs.token }}
+
+      - name: Run Performance Test
+        run: |
+          neoload-cli --launch "My Performance Test" \
+          --project-path path/to/your/project \
+          --scenario "Happy Flow" \
+          --test-description "Performance Test" \
+          --sla "Responsetime>0.2:warning;Responsetime>0.3:failure" \
+          --duration 120 \
+          --max-virtual-users 5 \
+          --ramp-up 20 \
+          --soap-wsdl-url "http://demowebshop.tricentis.com/Plugins/Misc.WebServicesCustomer/Remote/NopService.svc?wsdl"
+
+      - name: Generate Test Report
+        run: neoload test-results junitsla
+
+      - name: Publish Test Report
+        if: ${{ always() }}
+        uses: scacap/action-surefire-report@v1
+        with:
+          report_paths: junit-sla.xml
+          fail_on_test_failures: true
+
+      - name: Publish Test Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: Test Results
+          path: path/to/your/test/results
