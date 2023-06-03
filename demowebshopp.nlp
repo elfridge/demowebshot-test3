@@ -1,0 +1,19 @@
+# Project description file
+
+project.name=demowebshopp
+project.version=8.7
+project.original.version=8.7
+product.name=NeoLoad
+product.original.name=NeoLoad
+ssh.trustUnknownHosts.MONITORS=false
+monitor.tls.insecure=false
+product.version=2023.1.1
+product.original.version=2023.1.0
+project.is-open-test-settings-after-upload=false
+project.id=d5cb4fee-bc40-4a56-ac73-e043b85bb155
+project.config.path=config.zip
+project.config.storage=ZIP
+team.server.enabled=false
+project.workspace=5e3acde2e860a132744ca916
+project.test-settings=a3291213-071b-4e8d-b3ff-76b67a3c81f8
+project.test-settings-name=demowebshopp
