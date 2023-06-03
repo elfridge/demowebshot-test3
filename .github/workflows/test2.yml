@@ -1,9 +1,21 @@
 name: Performance Test2
 
 on:
-  push:
-    branches:
-      - main
+   workflow_dispatch:
+    inputs:
+      api_url:
+        required: true
+        description: 'NeoLoad Web Api Url'
+        default: 'https://neoload-api.saas.neotys.com/'
+      token:
+        required: true
+        description: 'NeoLoad Web Token'
+        default: '2715b6aafd2f6eb568e7d62b709e5a28a4cf6df9711db161'
+      zone_id:
+        required: true
+        description: 'Zone identifier'
+        default: 'defaultzone'
+
 
 jobs:
   performance_test:
@@ -13,10 +25,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Java
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
+      - name: "Install NeoLoad CLI"
+        run: pip3 install -U neoload
 
       - name: Install NeoLoad
         run: |
