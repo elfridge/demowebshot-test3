@@ -1,0 +1,43 @@
+name: Neoload Performance Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  performance_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Neoload CLI
+        run: |
+          # Install Neoload CLI
+
+      - name: Start Neoload Test
+        run: |
+          neoload test --project-path ./project.nlp \
+                      --scenario "Happy Flow" \
+                      --test-duration 2m \
+                      --users 5 \
+                      --ramp-up 20s \
+                      --web-service-url "http://demowebshop.tricentis.com/Plugins/Misc.WebServicesCustomer/Remote/NopService.svc?wsdl" \
+                      --operation "GetPaymentMethodCollection" \
+                      --username "mc.elfferich@student.avans.nl" \
+                      --password "Welcome01" \
+                      --assertion "Response Time > 0.2:Warning" \
+                      --assertion "Response Time > 0.3:Failure"
+
+      - name: Monitor Test Progress
+        run: |
+          # Continuously check the test progress and wait for completion
+
+      - name: Retrieve Test Results
+        run: |
+          # Download the test results and generate reports
+
+      - name: Publish Test Results
+        # Upload the test results or reports to an artifact repository or any desired location
