@@ -21,10 +21,13 @@ user_paths:
                   url: http://demowebshop.tricentis.com/Plugins/Misc.WebServicesCustomer/Remote/NopService.svc?wsdl
                   method: POST
                   body: |
-                    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nop="http://nopCommerce.com">
-                      <soapenv:Header/>
+                    <?xml version="1.0" encoding="UTF-8"?>
+                    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
                       <soapenv:Body>
-                        <nop:GetPaymentMethodCollection/>
+                        <GetPaymentMethodCollection xmlns="http://tempuri.org/">
+                          <usernameOrEmail>mc.elfferich@student.avans.nl</usernameOrEmail>
+                          <userPassword>Welcome01</userPassword>
+                        </GetPaymentMethodCollection>
                       </soapenv:Body>
                     </soapenv:Envelope>
                   headers:
