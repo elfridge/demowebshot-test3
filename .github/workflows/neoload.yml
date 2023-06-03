@@ -19,7 +19,7 @@ jobs:
 
       - name: Start Neoload Test
         run: |
-          neoload test --project-path ./project.nlp \
+          neoload test --project-path ./demowebshopp.nlp \
                       --scenario "Happy Flow" \
                       --test-duration 2m \
                       --users 5 \
