@@ -1,0 +1,34 @@
+name: NeoLoad Performance Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  neoload-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Neoload CLI
+        run: pip3 install -U neoload
+
+      - name: Get NeoLoad project
+        run: wget https://raw.githubusercontent.com/elfridge/demowebshot-test3/main/simpledemo.yml
+
+      - name: Start NeoLoad Test
+        run: |
+          neoload test --project-path simpledemo.yml \
+                      --scenario "simpledemo" \
+                      --test-duration 2m \
+                      --users 5 \
+                      --ramp-up 20s \
+                      --web-service-url "http://demowebshop.tricentis.com/Plugins/Misc.WebServicesCustomer/Remote/NopService.svc?wsdl" \
+                      --operation "GetPaymentMethodCollection" \
+                      --username "mc.elfferich@student.avans.nl" \
+                      --password "Welcome01" \
+                      --assertion "Response Time > 0.2:Warning" \
+                      --assertion "Response Time > 0.3:Failure"
