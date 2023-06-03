@@ -16,7 +16,6 @@ on:
         description: 'Zone identifier'
         default: 'defaultzone'
 
-
 jobs:
   performance_test:
     runs-on: ubuntu-latest
@@ -27,12 +26,6 @@ jobs:
 
       - name: "Install NeoLoad CLI"
         run: pip3 install -U neoload
-
-      - name: Install NeoLoad
-        run: |
-          wget -O neoload.tar.gz https://neoload-files.neotys.com/jenkins/neoload/v7.10/Neoload_7.10_Linux_x64.tar.gz
-          tar xvf neoload.tar.gz
-          export PATH=$PATH:$PWD/NeoLoad/bin/
 
       - name: Login to WSDL
         run: |
